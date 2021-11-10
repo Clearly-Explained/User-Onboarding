@@ -9,10 +9,17 @@ In the project directory, you can run:
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
 ### `npm test`
+=======
+- [ ] Start off by installing a blank React app by running `npx create-react-app <app-name> --use-npm`.
+- [ ] Run `cd <app-name>` to cd into the `<app-name>` directory.
+- [ ] Using `npm`, add the following as dependencies inside your React app:
+  - `yup`
+  - `axios`
+- [ ] Create a component file called `Form.js`, import it into your `App.js` file, and place the component in your JSX there.
+
+### Task 2: MVP
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
@@ -42,14 +49,8 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+=======
+### Task 3: Stretch Goals
 
 ### Making a Progressive Web App
 
@@ -57,7 +58,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ma
 
 ### Advanced Configuration
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
 ### Deployment
 
@@ -66,3 +66,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+=======
+* [ ] Submit a Pull-Request to merge `<firstName-lastName>` Branch into `main` (student's  Repo). **Please don't merge your own pull request**
+
