@@ -1,101 +1,103 @@
-import './App.css';
-import Form from './Form'
-import React, { useState, useEffect } from 'react'
-import schema from './formSchema'
-import axios from 'axios'
-import * as yup from 'yup'
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Form from "./Component/Form";
+import User from "./Component/User";
+import schema from "./Component/FormSchema";
+import * as yup from "yup";
 
-const initialFormValues = {
-  name: '',
-  email: '',
-  password: '',
-  terms: false,
-}
-
+const initialFormVals = {
+  name: "",
+  email: "",
+  password: "",
+  serviceTerms: false, // checkbox
+};
 const initialFormErrors = {
-  name: '',
-  email: '',
-  password: '',
-  terms: '',
-}
+  name: "",
+  email: "",
+  password: "",
+};
+const initialUsers = [];
+const initialDisabled = true;
 
-const initialDisabled = true
+function App() {
+  const [users, setUsers] = useState(initialUsers);
+  const [formVals, setFormVals] = useState(initialFormVals);
+  const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [disabled, setDisabled] = useState(initialDisabled);
 
-export default function App() {
-  const [formValues, setFormValues] = useState(initialFormValues)
-  const [formErrors, setFormErrors] = useState(initialFormErrors)
-  const [disabled, setDisabled] = useState(initialDisabled)
-  const [post, setPost] = useState([])
-
-  const postNewUser = newUser => {
-    axios.post("https://reqres.in/api/users", newUser)
-      .then(res => {
-        setPost(res.data)
-        setFormValues(initialFormValues)
+  const getUsers = () => {
+    axios
+      .get("https://reqres.in/api/users")
+      .then((res) => {
+        setUsers([...users, res.data]);
       })
-      .catch(err => {
-        console.log(err)
+      .catch((err) => {
+        console.error(err);
       })
       .finally(() => {
+        setFormVals(initialFormVals);
+      });
+  };
+  const postNewUser = (newUser) => {
+    axios
+      .post("https://reqres.in/api/users", newUser)
+      .then((res) => {
+        setUsers([...users, res.data]);
       })
-  }
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => setFormVals(initialFormVals));
+  };
+
+  const updateForm = (inputName, inputValue) => {
+    validate(inputName, inputValue);
+    setFormVals({ ...formVals, [inputName]: inputValue });
+  };
+  const submitForm = () => {
+    const newUser = {
+      name: formVals.name.trim(),
+      email: formVals.email.trim(),
+      password: formVals.password.trim(),
+      serviceTerms: formVals.serviceTerms,
+    };
+    postNewUser(newUser);
+  };
 
   const validate = (name, value) => {
     yup
       .reach(schema, name)
       .validate(value)
-      .then(valid => {
-        setFormErrors({
-          ...formErrors,
-          [name]: ""
-        })
-      })
-      .catch(err => {
-        setFormErrors({
-          ...formErrors,
-          [name]: err.errors[0]
-        });
-      });
-  }
-
-  const inputChange = (name, value) => {
-    validate(name, value)
-    setFormValues({
-      ...formValues,
-      [name]: value
-    })
-  }
-
-  const formSubmit = () => {
-    const newUser = {
-      name: formValues.name.trim(),
-      email: formValues.email.trim(),
-      password: formValues.password.trim(),
-      terms: formValues.terms,
-    }
-    postNewUser(newUser)
-  }
+      .then(() => setFormErrors({ ...formErrors, [name]: "" }))
+      .catch((error) =>
+        setFormErrors({ ...formErrors, [name]: error.errors[0] })
+      );
+  };
 
   useEffect(() => {
-    schema.isValid(formValues)
-      .then(valid => {
-        setDisabled(!valid)
-      })
-  }, [formValues])
+    getUsers();
+  }, []);
+
+  useEffect(() => {
+    schema.isValid(formVals).then((valid) => setDisabled(!valid));
+  }, [formVals]);
 
   return (
-    <div className='container'>
-      <header><h1>User Onboarding</h1></header>
+    <div className="App">
+      <h1>Sign Up</h1>
       <Form
-        values={formValues}
-        change={inputChange}
-        submit={formSubmit}
+        formVals={formVals}
+        update={updateForm}
+        submit={submitForm}
         disabled={disabled}
         errors={formErrors}
-        formValues={formValues}
-        postNewUser={postNewUser}
       />
-      <pre>{JSON.stringify(post, null, 2)}</pre>
+      {users.map((user) => {
+        return <User key={user.id} user={user} />;
+      })}
     </div>
-  )
+  );
 }
+
+export default App;
