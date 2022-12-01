@@ -6,7 +6,7 @@ import User from "./Component/User";
 import schema from "./Component/FormSchema";
 import * as yup from "yup";
 
-const initialFormVals = {
+const initialFormValues = {
   name: "",
   email: "",
   password: "",
@@ -22,7 +22,7 @@ const initialDisabled = true;
 
 function App() {
   const [users, setUsers] = useState(initialUsers);
-  const [formVals, setFormVals] = useState(initialFormVals);
+  const [formValues, setformValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
 
@@ -36,7 +36,7 @@ function App() {
         console.error(err);
       })
       .finally(() => {
-        setFormVals(initialFormVals);
+        setformValues(initialFormValues);
       });
   };
   const postNewUser = (newUser) => {
@@ -48,19 +48,19 @@ function App() {
       .catch((err) => {
         console.error(err);
       })
-      .finally(() => setFormVals(initialFormVals));
+      .finally(() => setformValues(initialFormValues));
   };
 
   const updateForm = (inputName, inputValue) => {
     validate(inputName, inputValue);
-    setFormVals({ ...formVals, [inputName]: inputValue });
+    setformValues({ ...formValues, [inputName]: inputValue });
   };
   const submitForm = () => {
     const newUser = {
-      name: formVals.name.trim(),
-      email: formVals.email.trim(),
-      password: formVals.password.trim(),
-      serviceTerms: formVals.serviceTerms,
+      name: formValues.name.trim(),
+      email: formValues.email.trim(),
+      password: formValues.password.trim(),
+      serviceTerms: formValues.serviceTerms,
     };
     postNewUser(newUser);
   };
@@ -80,14 +80,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    schema.isValid(formVals).then((valid) => setDisabled(!valid));
-  }, [formVals]);
+    schema.isValid(formValues).then((valid) => setDisabled(!valid));
+  }, [formValues]);
 
   return (
     <div className="App">
       <h1>Sign Up</h1>
       <Form
-        formVals={formVals}
+        formValues={formValues}
         update={updateForm}
         submit={submitForm}
         disabled={disabled}

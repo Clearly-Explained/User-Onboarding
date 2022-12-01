@@ -8,7 +8,7 @@ export default function User(props) {
   return (
     <div className="user-container">
         <br></br>
-      <h3>{props.user.name}</h3>
+      <h3>Here:{props.user.name}</h3>
       <p>{props.user.email}</p>
       <p>{props.user.password}</p>
     </div>

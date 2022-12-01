@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Form(props) {
-  const { formVals, update, submit, disabled, errors } = props;
+  const { formValues, update, submit, disabled, errors } = props;
 
   const onChange = (evt) => {
     const { name, value, checked, type } = evt.target;
@@ -30,7 +30,7 @@ export default function Form(props) {
             <input
               type="type"
               name="name"
-              value={formVals.name}
+              value={formValues.name}
               onChange={onChange}
             />
           </label>
@@ -40,7 +40,7 @@ export default function Form(props) {
             <input
               type="type"
               name="email"
-              value={formVals.email}
+              value={formValues.email}
               onChange={onChange}
             />
           </label>
@@ -50,7 +50,7 @@ export default function Form(props) {
             <input
               type="password"
               name="password"
-              value={formVals.password}
+              value={formValues.password}
               onChange={onChange}
             />
           </label>
@@ -60,7 +60,7 @@ export default function Form(props) {
             <input
               type="checkbox"
               name="serviceTerms"
-              checked={formVals.serviceTerms}
+              checked={formValues.serviceTerms}
               onChange={onChange}
             />
           </label>
